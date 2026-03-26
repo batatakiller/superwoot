@@ -25,7 +25,7 @@ services:
       - REDIS_URL=redis://redis:6379
       - REDIS_PASSWORD=${SERVICE_PASSWORD_REDIS}
       - BAILEYS_PROVIDER_DEFAULT_CLIENT_NAME=${BAILEYS_PROVIDER_DEFAULT_CLIENT_NAME}
-      - BAILEYS_PROVIDER_DEFAULT_URL=${BAILEYS_PROVIDER_DEFAULT_URL}
+      - BAILEYS_PROVIDER_DEFAULT_URL=http://baileys:8080
       - BAILEYS_PROVIDER_DEFAULT_API_KEY=${BAILEYS_PROVIDER_DEFAULT_API_KEY}
       - BAILEYS_PROVIDER_USE_INTERNAL_HOST_URL=true
       - MAILER_SENDER_EMAIL=${MAILER_SENDER_EMAIL}
@@ -79,7 +79,7 @@ services:
       - REDIS_URL=redis://redis:6379
       - REDIS_PASSWORD=${SERVICE_PASSWORD_REDIS}
       - BAILEYS_PROVIDER_DEFAULT_CLIENT_NAME=${BAILEYS_PROVIDER_DEFAULT_CLIENT_NAME}
-      - BAILEYS_PROVIDER_DEFAULT_URL=${BAILEYS_PROVIDER_DEFAULT_URL}
+      - BAILEYS_PROVIDER_DEFAULT_URL=http://baileys:8080
       - BAILEYS_PROVIDER_DEFAULT_API_KEY=${BAILEYS_PROVIDER_DEFAULT_API_KEY}
       - BAILEYS_PROVIDER_USE_INTERNAL_HOST_URL=true
       - MAILER_SENDER_EMAIL=${MAILER_SENDER_EMAIL}
@@ -98,6 +98,19 @@ services:
       interval: 20s
       timeout: 20s
       retries: 10
+
+  baileys:
+    image: 'orkestrat/baileys-api:latest'
+    restart: always
+    volumes:
+      - 'baileys_data:/app/sessions'
+    environment:
+      - API_KEY=${BAILEYS_PROVIDER_DEFAULT_API_KEY}
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   postgres:
     image: 'pgvector/pgvector:pg16'
@@ -134,3 +147,9 @@ services:
       interval: 20s
       timeout: 20s
       retries: 10
+
+volumes:
+  postgres:
+  redis:
+  storage:
+  baileys_data:
