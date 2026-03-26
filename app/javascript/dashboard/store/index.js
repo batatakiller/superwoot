@@ -58,6 +58,7 @@ import copilotThreads from './captain/copilotThreads';
 import copilotMessages from './captain/copilotMessages';
 import captainScenarios from './captain/scenarios';
 import captainTools from './captain/tools';
+import kanban from './modules/kanban';
 import captainCustomTools from './captain/customTools';
 
 const plugins = [];
@@ -123,6 +124,8 @@ export default createStore({
     captainScenarios,
     captainTools,
     captainCustomTools,
+    kanban,
+
   },
   plugins,
 });

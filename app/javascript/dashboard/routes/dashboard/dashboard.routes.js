@@ -20,6 +20,14 @@ export default {
       path: frontendURL('accounts/:accountId'),
       component: AppContainer,
       children: [
+        {
+          path: frontendURL('accounts/:accountId/kanban'),
+          name: 'kanban_dashboard',
+          component: () => import('./kanban/KanbanView.vue'),
+          meta: {
+            permissions: ['administrator', 'agent'],
+          },
+        },
         ...captainRoutes,
         ...inboxRoutes,
         ...conversation.routes,
