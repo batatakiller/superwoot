@@ -94,7 +94,7 @@ onMounted(() => {
               </div>
               <span class="text-sm font-semibold truncate text-slate-800 dark:text-slate-100 italic">
                 {{ element.meta.sender.name }}
-              </div>
+              </span>
             </div>
 
             <!-- Última Mensagem -->
